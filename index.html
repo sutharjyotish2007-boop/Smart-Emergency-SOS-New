@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#111827">
+  <title>EmergencyConnect — AI Triage & Response</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <a class="brand" href="#"><b>EC</b><span><strong>Emergency<span>Connect</span></strong><small>AI TRIAGE · SAFETY · RESPONSE</small></span></a>
+  <button id="menuBtn" aria-label="Toggle menu">☰</button>
+  <nav id="nav">
+    <a href="#help">Emergency help</a>
+    <a href="#ai-assistant">Gemini AI Triage</a>
+    <a href="#command-queue">Live Queue</a>
+    <a href="#report">Incident report</a>
+    <a href="#guides">Safety guides</a>
+    <a href="#demo-lab">Demo Lab</a>
+  </nav>
+  <span id="netBadge" class="demo">🟢 Online Cloud Mode</span>
+</header>
+<main>
+<section class="hero">
+  <div>
+    <p class="eyebrow">GOOGLE DEVELOPER GROUP HACKATHON PROTOTYPE</p>
+    <h1>Autonomous SOS Triage<br><em>powered by Gemini AI.</em></h1>
+    <p class="lead">Instantly parse messy distress transcripts, extract vital location & urgency metrics, and organize first responder queues in real time.</p>
+    <a class="btn red" href="#ai-assistant">Try Gemini AI Triage ↗</a> 
+    <a class="btn ghost" href="#command-queue">View Live Queue</a>
+    <p class="tiny">✓ No account required · Secure client-side parsing</p>
+  </div>
+  <div class="hero-art">
+    <div class="ring"></div>
+    <div class="phone"><small>AI Dispatch</small><div class="sos">SOS</div><i></i><i></i><i></i><div class="phone-row">☎ ⌖ ✚</div></div>
+    <div class="float one">⚡ <span><b>Gemini 2.5 Flash</b><small>Instant JSON Parsing</small></span></div>
+    <div class="float two">⌖ <span><b>GPS Geolocation</b><small>Instant coordinates</small></span></div>
+  </div>
+</section>
+
+<div class="alert">
+  <b>!</b>
+  <p><strong>Immediate danger?</strong> Call <strong>112</strong> in India now. This prototype demonstrates AI emergency dispatch assistance and does not replace official responder services.</p>
+  <a class="btn red" href="tel:112">Call 112 ↗</a>
+</div>
+
+<section class="section" id="help">
+  <p class="eyebrow">QUICK ACCESS</p>
+  <h2>What kind of help do you need?</h2>
+  <p class="sub">Choose a situation to see general next steps and useful contacts.</p>
+  <div class="cards">
+    <button class="emergency medical" data-type="medical"><span>✚</span><b>Medical emergency</b><small>Urgent illness or injury</small><i>View guidance →</i></button>
+    <button class="emergency accident" data-type="accident"><span>🚑</span><b>Road accident</b><small>Crash or road injury</small><i>View guidance →</i></button>
+    <button class="emergency fire" data-type="fire"><span>♨</span><b>Fire / smoke</b><small>Fire or building hazard</small><i>View guidance →</i></button>
+    <button class="emergency disaster" data-type="disaster"><span>🌧</span><b>Natural disaster</b><small>Flood, storm or earthquake</small><i>View guidance →</i></button>
+    <button class="emergency safety" data-type="safety"><span>🛡</span><b>Personal / campus safety</b><small>Feel unsafe or need support</small><i>View guidance →</i></button>
+    <button class="emergency other" data-type="other"><span>•••</span><b>Other emergency</b><small>Not sure which category</small><i>View guidance →</i></button>
+  </div>
+  <div id="guidance" class="panel hidden">
+    <button class="close" id="closeGuide">×</button>
+    <p class="eyebrow">NEXT STEPS</p>
+    <h3 id="guideTitle">Emergency guidance</h3>
+    <div id="guideBody" class="guide-body"></div>
+    <a href="tel:112" class="btn red">Call 112 ☎</a> <button id="copyGuide" class="btn dark">Copy guidance</button>
+    <p class="tiny">General safety information only. Follow emergency professionals and local authorities.</p>
+  </div>
+</section>
+
+<section class="section" id="ai-assistant">
+  <p class="eyebrow">GOOGLE GEMINI 2.5 FLASH INTEGRATION</p>
+  <h2>AI Distress Signal Triage</h2>
+  <p class="sub">Paste a messy emergency message or simulate an incoming voice note transcript. Gemini instantly parses it into structured CAD JSON data.</p>
+  <div class="ai-workspace">
+    <div class="panel">
+      <label for="aiInput" style="display:block;font-size:11px;font-weight:800;color:#4d5b6f;margin-bottom:8px">Victim SOS Transcript / Message</label>
+      <textarea id="aiInput" rows="4" placeholder="e.g., Water rising fast near CTAE hostel room 302, 2 students stuck and need medical help!"></textarea>
+      <label style="display:block;font-size:10px;font-weight:800;color:#78869a;margin:12px 0 6px">Or simulate incoming voice notes (Click to test):</label>
+      <div class="voice-chips">
+        <button type="button" class="chip" data-voice="Heavy flood water rushing into CTAE workshop, 3 people trapped on roof!">🌊 Flood Emergency</button>
+        <button type="button" class="chip" data-voice="My friend collapsed near basketball court, not responding, urgent medical help needed!">✚ Medical Crisis</button>
+        <button type="button" class="chip" data-voice="Smoke billowing out of electrical room in department building, burning smell!">♨ Fire Hazard</button>
+      </div>
+      <button type="button" class="btn red full" id="aiAnalyze">⚡ Analyze with Gemini AI & Dispatch</button>
+    </div>
+    <div class="panel triage-output" id="aiResultCard" aria-live="polite">
+      <span class="local">GEMINI AI READY</span>
+      <h3 style="margin:5px 0 10px;font-size:15px">Awaiting Distress Signal</h3>
+      <p style="color:#687588;font-size:12px;line-height:1.7">Enter an SOS message or click a sample voice simulation on the left. Gemini will extract urgency, category, and precise location attributes.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="command-queue">
+  <p class="eyebrow">FIRST RESPONDER DASHBOARD</p>
+  <h2>Live Command Center Queue</h2>
+  <p class="sub">Active incoming emergency tickets sorted and tracked in real time for rescue dispatchers.</p>
+  <div class="panel" style="overflow-x:auto">
+    <table class="queue-table">
+      <thead>
+        <tr>
+          <th>Ticket ID</th>
+          <th>Location</th>
+          <th>Category</th>
+          <th>Urgency</th>
+          <th>Action Summary</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="queueBody"></tbody>
+    </table>
+    <p class="tiny" style="margin-top:15px">✓ Auto-synchronized with incoming AI triage events.</p>
+  </div>
+</section>
+
+<section class="section" id="preparedness">
+  <p class="eyebrow">SMALL STEPS BEFORE AN EMERGENCY</p>
+  <h2>Preparedness checklist</h2>
+  <p class="sub">Tick off useful preparation tasks. Your progress is saved only while this page remains open.</p>
+  <div class="panel checklist">
+    <label><input type="checkbox" class="prep-check"> Save the official emergency number 112 in my phone</label>
+    <label><input type="checkbox" class="prep-check"> Know the nearest safe exit and assembly point</label>
+    <label><input type="checkbox" class="prep-check"> Choose a trusted contact to call in an emergency</label>
+    <label><input type="checkbox" class="prep-check"> Know a nearby landmark to describe my location</label>
+    <label><input type="checkbox" class="prep-check"> Keep essential medicines / emergency information accessible if needed</label>
+    <div class="progress-wrap"><div class="progress-track"><div id="prepProgress"></div></div><b id="prepCount">0 of 5 completed</b></div>
+  </div>
+</section>
+
+<section class="section" id="demo-lab">
+  <p class="eyebrow">JUDGE-FRIENDLY LIVE DEMO</p>
+  <h2>Try a sample emergency flow</h2>
+  <p class="sub">Use this simulator during judging instead of creating a real emergency or calling anyone.</p>
+  <div class="panel demo-lab">
+    <label for="scenarioSelect" style="display:block;font-size:11px;font-weight:800;color:#4d5b6f;margin-bottom:8px">Choose a demo scenario</label>
+    <select id="scenarioSelect">
+      <option value="fire">Smoke detected in a hostel corridor</option>
+      <option value="accident">Road accident near the college gate</option>
+      <option value="medical">A person appears unconscious</option>
+      <option value="safety">Student feels unsafe walking alone</option>
+    </select>
+    <button type="button" class="btn dark" id="runScenario">Run demo scenario</button>
+    <div id="scenarioOutput" class="scenario-output" aria-live="polite">
+      <b>Ready for demo</b><p>Select a scenario and run it to show the app’s decision flow.</p>
+    </div>
+    <p class="tiny">Simulator only: it does not contact anyone, send data, or create a real incident.</p>
+  </div>
+</section>
+
+<section class="location section">
+  <div>
+    <p class="eyebrow">SHARE YOUR LOCATION & TRUSTED SMS</p>
+    <h2>Help people find<br><em>where you are.</em></h2>
+    <p class="sub">Generate your coordinates when you choose. Copy, share, or instantly text a trusted contact.</p>
+    <p class="privacy">🔒 <span><b>Your choice, your location</b><small>Coordinates stay in your browser and are never stored on a server.</small></span></p>
+  </div>
+  <div class="panel">
+    <b>⌖ My current location</b>
+    <small id="locStatus">Location has not been requested</small>
+    <div class="map"><div class="pin">⌖</div><span id="mapLabel">Location preview appears here</span></div>
+    <pre id="coords">Latitude: —\nLongitude: —</pre>
+    <button class="btn dark" id="getLoc">Get my location</button> 
+    <button class="btn pale" id="shareLoc" disabled>Share / copy</button>
+    <button class="btn red" id="smsTrusted" disabled>💬 Text Trusted Contact SMS</button>
+    <p class="tiny">Location requires HTTPS or localhost and your permission.</p>
+  </div>
+</section>
+
+<section class="section" id="report">
+  <p class="eyebrow">HELP OTHERS HELP YOU</p>
+  <h2>Create an incident report</h2>
+  <p class="sub">Prepare a report you can copy or share manually. In a real emergency, call first.</p>
+  <div class="report-grid">
+    <form id="reportForm" class="panel">
+      <label>Emergency type
+        <select id="type">
+          <option>Medical emergency</option>
+          <option>Road accident</option>
+          <option>Fire / smoke</option>
+          <option>Natural disaster</option>
+          <option>Personal / campus safety</option>
+          <option>Other</option>
+        </select>
+      </label>
+      <label>Location / nearby landmark<input id="where" required maxlength="120" placeholder="e.g. near college main gate"></label>
+      <label>What happened?<textarea id="details" required maxlength="500" rows="4" placeholder="Briefly describe the situation."></textarea></label>
+      <label>Callback name (optional)<input id="name" maxlength="60" placeholder="First name or preferred name"></label>
+      <label>Send Directly To Number (Optional)<input id="customPhone" type="tel" placeholder="e.g. 9829XXXXXX or 112"></label>
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px;">
+        <button class="btn dark" type="button" id="sendSMS">💬 Send via SMS</button>
+        <button class="btn pale" type="button" id="sendWhatsApp" style="background:#25D366; color:white">🟢 Send via WhatsApp</button>
+      </div>
+      <button class="btn red full" type="submit" style="margin-top:12px">Prepare incident report ↗</button>
+      <p class="tiny">This creates a local draft or direct dispatch packet.</p>
+    </form>
+    <div class="panel">
+      <span class="local">LOCAL DRAFT</span>
+      <h3>Your report preview</h3>
+      <pre id="output">Complete the form to create a report.</pre>
+      <button class="btn dark" id="copyReport" disabled>Copy report</button> 
+      <button class="btn pale" id="shareReport" disabled>Share report</button>
+      <p class="tiny">Only share information with trusted people or verified emergency services.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="guides">
+  <p class="eyebrow">BE PREPARED</p>
+  <h2>Quick safety guides</h2>
+  <div class="guide-cards">
+    <article><span>✚</span><h3>Medical</h3><ul><li>Call emergency services for serious or life-threatening conditions.</li><li>Follow the call handler's instructions.</li><li>Do not give food or drink to an unconscious person.</li></ul></article>
+    <article><span>♨</span><h3>Fire / smoke</h3><ul><li>Leave if you can do so safely; use stairs, not lifts.</li><li>Call from a safe place.</li><li>Do not re-enter until authorities say it is safe.</li></ul></article>
+    <article><span>🚧</span><h3>Road accident</h3><ul><li>Keep away from traffic and other hazards.</li><li>Call for help and give a clear location.</li><li>Avoid moving a seriously injured person unless there is immediate danger.</li></ul></article>
+    <article><span>🌦</span><h3>Disaster</h3><ul><li>Follow official alerts and evacuation instructions.</li><li>Stay away from floodwater and downed power lines.</li><li>Check on others only if it is safe.</li></ul></article>
+  </div>
+</section>
+
+<section class="bottom-call">
+  <div>
+    <p class="eyebrow">OFFICIAL HELP</p>
+    <h2>Need urgent assistance?</h2>
+    <p>In India, 112 is the pan-India emergency response number.</p>
+  </div>
+  <a href="tel:112"><small>CALL EMERGENCY NUMBER</small><strong>112 ↗</strong><small>Tap to open your phone dialler</small></a>
+</section>
+</main>
+<footer>
+  <a class="brand" href="#"><b>EC</b><span><strong>Emergency<span>Connect</span></strong><small>AI TRIAGE · SAFETY · RESPONSE</small></span></a>
+  <p>Student-built GDG Hackathon prototype. Not an official emergency service.</p>
+  <p>Built by Team EmergencyConnect</p>
+</footer>
+<div id="toast" role="status"></div>
+<script src="app.js"></script>
+</body>
+</html>
